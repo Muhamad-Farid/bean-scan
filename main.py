@@ -58,24 +58,27 @@ def predict():
                 labels = "<= 12%"
                 pesan = "Kadar air biji kopi sudah sangat bagus dan tidak disarankan untuk melakukan pengeringan lagi      karena hal tersebut dapat menyebabkan bobot biji menjadi sangat ringan "
             elif classes_x == 1:
-                labels = "13% - 16%"
-                pesan = "Kadar air 13% - 16% tergolong cukup bagus dan anda bisa saja melakukan pengeringan dengan suhu yang tidak lebih dari 50 derajat celcius dengan waktu dua sampai tiga jam. Hal ini untuk menghindari pemanasan berlebih terhadap biji kopi, karena pemanasan berlebih dapat menyebabkan kualitas biji kopi dan bobot biji kopi menjadi menurun."
+                labels = "13%-16%"
+                pesan = "Kadar air 13%-16% tergolong cukup bagus dan anda bisa saja melakukan pengeringan dengan suhu yang tidak lebih dari 50 derajat celcius dengan waktu dua sampai tiga jam. Hal ini untuk menghindari pemanasan berlebih terhadap biji kopi, karena pemanasan berlebih dapat menyebabkan kualitas biji kopi dan bobot biji kopi menjadi menurun."
             elif classes_x == 2:
-                labels = "17% - 20%"
+                labels = "17%-20%"
                 pesan = "Secara umum kadar air dengan persentase 17% sampai 20% tergolong masih banyak mengandung air yang artinya perlu dikeringkan lagi. Pengeringan sebiaknya dilakukan menggunakan oven karena hal ini lebih dapat dikontrol dan menghemat biaya pengeringan. Pengeringan sebaiknya dilakukan dengan suhu 50 derajat celcius sampai 60 derajat celcius dengan durasi selama kurang lebih 1 sampai 2 jam."
             elif classes_x == 3:
-                labels = "21% - 40%"
+                labels = "21%-40%"
                 pesan = "Kadar air sebesar ini dapat dilakukan pengeringan secara konvensional dan modern hal itu tergantung dari jumlah biji yang akan dikeringkan. Dengan durasi sebesar 20 jam pada suhu 50 derajat celcius sampai 60 derajat celcius maka kadar air sebesar 12% dapat dicapai."
-            else:
-                labels = "> 50% - 55%"
+            elif classes_x == 4:
+                labels = ">50% -55%"
                 pesan = "Kekeringan ini biasanya didapatkan karena biji kopi yang baru dikupas dikeringkan pada suhu kamar dengan udara bebas. Pengeringan dengan kadar air sebesar ini disarankan menggunakan pengeringan konvensional atau tidak memakai oven karena hal ini dapat menyebabkan pemborosan energi dan terbilang tidak efisien jika  biji kopi yang dikeringkan dalam jumlah besar. Namun jika dalam jumlah yang tidak terlalu besar pengeringan dapat dilakukan dengan oven menggunakan dengan suhu di atas 60 derajat celcius dengan durasi sekitar 25 sampai 30 jam."
+            else:
+                labels = "bukan kopi"
+                pesan = "Gambar yang dimasukkan bukan gambar biji kopi."
             
             # Simpan file ke bucket di Google Cloud Storage dengan folder berdasarkan user_id
             blob_url = save_file_to_bucket(file_path, filename, user_id)
 
             result = {
                 'labels': labels,
-                'deskripsi': pesan,
+                'pesan_kualitas': pesan,
                 'user_image': blob_url
             }
 
@@ -85,3 +88,4 @@ def predict():
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=False, host='0.0.0.0', port=8080)
+
